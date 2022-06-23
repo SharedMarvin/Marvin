@@ -89,12 +89,13 @@ module.exports = {
             image '${manifest["agent-image"]}'
             args '-u root'
             containerPerStageRoot true
+            args '-v /var/marvin:/var/marvin'
             customWorkspace '/var/jenkins_home/agent/${Module}/${Project}/${Snowflake}/workspace'
             reuseNode false
         }
     }
     environment {
-        REPORT = ''
+        REPORT = '{}'
     }
     stages {
         stage('Setup') {
@@ -103,26 +104,26 @@ module.exports = {
                     set +x
                     apt-get update && apt-get install -y git nodejs npm
                     rm -rf cloning-area
-                    git clone https://github.com/${process.env["GITHUB_ORGANIZATION"]}/${process.env["GITHUB_RUNNER_REPOSITORY"]}.git cloning-area && mv cloning-area/* . && rm -rf cloning-area
+                    cp /var/marvin/* .
                     npm install
                     git clone https://github.com/${process.env["GITHUB_ORGANIZATION"]}/${Module}-${Project}.git cloning-area && mv cloning-area/* . && rm -rf cloning-area
                     git clone ${payload.repository.clone_url} cloning-area && mv cloning-area/* . && rm -rf cloning-area
                     set -x
-                    ${process.env["RUNNER_SETUP_CMD"]}
+                    node marvin.js --setup
                 '''
             }
         }
         stage('Build') {
             steps {
                 echo "========== BUILD LOGS =========="
-                sh '${process.env["RUNNER_BUILD_CMD"]}'
+                sh 'node marvin.js --build'
                 echo "================================"
             }
         }
         stage('Testing') {
             steps {
                 echo "========== TESTS LOGS =========="
-                sh '${process.env["RUNNER_TESTS_CMD"]}'
+                sh 'node marvin.js --tests'
                 echo "================================"
             }
         }

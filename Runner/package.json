@@ -1,0 +1,19 @@
+{
+  "name": "marvin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "marvin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SharedMarvin/marvin.git"
+  },
+  "author": "Lqvrent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SharedMarvin/marvin/issues"
+  },
+  "homepage": "https://github.com/SharedMarvin/marvin#readme"
+}

@@ -13,6 +13,7 @@ services:
       - ${DOCKER_SOCK_PATH}:/var/run/docker.sock
       - ./Jenkins/configuration.yml:/var/configuration.yml
       - ./Jenkins/jobs.groovy:/var/jobs.groovy
+      - ./Runner:/var/marvin
     environment:
       ADMIN_ID: ${JENKINS_ADMIN_ID}
       ADMIN_NAME: ${JENKINS_ADMIN_NAME}
@@ -40,10 +41,6 @@ services:
       JENKINS_HOST: jenkins
       GITHUB_ORGANIZATION: ${GITHUB_ORGANIZATION}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
-      GITHUB_RUNNER_REPOSITORY: ${GITHUB_RUNNER_REPOSITORY}
-      RUNNER_SETUP_CMD: ${RUNNER_SETUP_CMD}
-      RUNNER_BUILD_CMD: ${RUNNER_BUILD_CMD}
-      RUNNER_TESTS_CMD: ${RUNNER_TESTS_CMD}
 
 volumes:
   jenkins_data: {}

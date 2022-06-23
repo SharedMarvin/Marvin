@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.355-jdk11
+FROM jenkins/jenkins:2.356-jdk11
 
 ENV JAVA_OPTS "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true -Dpermissive-script-security.enabled=true -Djenkins.install.runSetupWizard=false -Xmx4096m -Djava.awt.headless=true"
 ENV CASC_JENKINS_CONFIG /var/configuration.yml

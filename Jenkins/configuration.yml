@@ -1,5 +1,5 @@
 jenkins:
-  systemMessage: "Hello ! Welcome to an shared Marvin instance."
+  systemMessage: "Hello ! Welcome on Marvin."
   numExecutors: ${BUILD_AGENTS}
   authorizationStrategy:
     loggedInUsersCanDoAnything:
