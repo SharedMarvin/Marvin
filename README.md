@@ -1,4 +1,4 @@
-# Our Marvin
+# Shared Marvin
 A shared Jenkins instance to run tests for Epitech's projects.
 ## Usage
 ### Use an instance
