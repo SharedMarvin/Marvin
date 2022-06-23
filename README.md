@@ -73,3 +73,79 @@ Rename the `sample.env` to `.env`, so Docker-compose can use values inside.
 ### Run the bot & the instance
 Open a shell in your Marvin directory and run `docker-compose up`<br />
 If you've completed the configuration right, you should have your own instance !
+
+## Supported projects in this instance
+#### Semester 0
+#### Semester 1
+###### B-BOO-101 - Bootcamp Phoenix
+- [ ] [phoenixd01](https://github.com/SharedMarvin/B-BOO-101-phoenixd01)
+- [ ] [phoenixd02](https://github.com/SharedMarvin/B-BOO-101-phoenixd02)
+- [ ] [phoenixd03](https://github.com/SharedMarvin/B-BOO-101-phoenixd03)
+- [ ] [phoenixd04](https://github.com/SharedMarvin/B-BOO-101-phoenixd04)
+- [ ] [phoenixd05](https://github.com/SharedMarvin/B-BOO-101-phoenixd05)
+###### B-CPE-100 - Unix & C Lab Seminar (Part I)
+- [ ] [cpoolday01](https://github.com/SharedMarvin/B-CPE-100-cpoolday01)
+- [ ] [cpoolday02](https://github.com/SharedMarvin/B-CPE-100-cpoolday02)
+- [ ] [cpoolday03](https://github.com/SharedMarvin/B-CPE-100-cpoolday03)
+- [ ] [cpoolday04](https://github.com/SharedMarvin/B-CPE-100-cpoolday04)
+- [ ] [cpoolday05](https://github.com/SharedMarvin/B-CPE-100-cpoolday05)
+- [ ] [cpoolday06](https://github.com/SharedMarvin/B-CPE-100-cpoolday06)
+- [ ] [cpoolday07](https://github.com/SharedMarvin/B-CPE-100-cpoolday07)
+- [ ] [cpoolday08](https://github.com/SharedMarvin/B-CPE-100-cpoolday08)
+- [ ] [cpoolday09](https://github.com/SharedMarvin/B-CPE-100-cpoolday09)
+- [ ] [cpoolday10](https://github.com/SharedMarvin/B-CPE-100-cpoolday10)
+- [ ] [cpoolday11](https://github.com/SharedMarvin/B-CPE-100-cpoolday11)
+- [ ] [cpoolday12](https://github.com/SharedMarvin/B-CPE-100-cpoolday12)
+- [ ] [cpoolday13](https://github.com/SharedMarvin/B-CPE-100-cpoolday13)
+- [ ] [rush1](https://github.com/SharedMarvin/B-CPE-100-rush1)
+- [ ] [rush2](https://github.com/SharedMarvin/B-CPE-100-rush2)
+- [ ] [star](https://github.com/SharedMarvin/B-CPE-100-star)
+- [ ] [firtree](https://github.com/SharedMarvin/B-CPE-100-firtree)
+- [ ] [countisland](https://github.com/SharedMarvin/B-CPE-100-countisland)
+- [ ] [Cworkshoplib](https://github.com/SharedMarvin/B-CPE-100-Cworkshoplib)
+###### B-CPE-101 - Unix & C Lab Seminar (Part II)
+- [ ] [infinadd](https://github.com/SharedMarvin/B-CPE-101-infinadd)
+- [ ] [bistromatic](https://github.com/SharedMarvin/B-CPE-101-bistromatic)
+- [ ] [evalexpr](https://github.com/SharedMarvin/B-CPE-101-evalexpr)
+- [ ] [finalstumper](https://github.com/SharedMarvin/B-CPE-101-finalstumper)
+###### B-CPE-110 - Elementary Programming in C
+- [ ] [bsbsq](https://github.com/SharedMarvin/B-CPE-110-bsbsq)
+- [ ] [BSQ](https://github.com/SharedMarvin/B-CPE-110-BSQ)
+- [ ] [pushswap](https://github.com/SharedMarvin/B-CPE-110-pushswap)
+- [ ] [antman](https://github.com/SharedMarvin/B-CPE-110-antman)
+###### B-MAT-100 - Mathematics
+- [ ] [101pong](https://github.com/SharedMarvin/B-MAT-100-101pong)
+- [ ] [102architect](https://github.com/SharedMarvin/B-MAT-100-102architect)
+- [ ] [103cipher](https://github.com/SharedMarvin/B-MAT-100-103cipher)
+- [ ] [104intersection](https://github.com/SharedMarvin/B-MAT-100-104intersection)
+- [ ] [105torus](https://github.com/SharedMarvin/B-MAT-100-105torus)
+###### B-MUL-100 - C Graphical Programming
+- [ ] [myhunter](https://github.com/SharedMarvin/B-MUL-100-myhunter)
+- [ ] [myscreensaver](https://github.com/SharedMarvin/B-MUL-100-myscreensaver)
+- [ ] [myrunner](https://github.com/SharedMarvin/B-MUL-100-myrunner)
+- [ ] [myradar](https://github.com/SharedMarvin/B-MUL-100-myradar)
+###### B-PSU-100 - Unix System Programming (Part I)
+- [ ] [bsmyprintf](https://github.com/SharedMarvin/B-PSU-100-bsmyprintf)
+- [ ] [myprintf](https://github.com/SharedMarvin/B-PSU-100-myprintf)
+- [ ] [bsmyls](https://github.com/SharedMarvin/B-PSU-100-bsmyls)
+- [ ] [myls](https://github.com/SharedMarvin/B-PSU-100-myls)
+###### B-PSU-101 - Unix System Programming (Part II)
+- [ ] [bsnavy](https://github.com/SharedMarvin/B-PSU-101-bsnavy)
+- [ ] [navy](https://github.com/SharedMarvin/B-PSU-101-navy)
+- [ ] [bsminishell1](https://github.com/SharedMarvin/B-PSU-101-bsminishell1)
+- [ ] [minishell1](https://github.com/SharedMarvin/B-PSU-101-minishell1)
+#### Semester 2
+#### Semester 3
+#### Semester 4
+#### Semester 5
+#### Semester 6
+#### Others
+###### M-OTH-420
+Tests we wrote for debug, testing, templating...
+- [ ] [ctemplate](https://github.com/SharedMarvin/M-OTH-420-ctemplate)
+- [ ] [csfmltemplate](https://github.com/SharedMarvin/M-OTH-420-csfmltemplate)
+- [ ] [cpptemplate](https://github.com/SharedMarvin/M-OTH-420-cpptemplate)
+- [ ] [success](https://github.com/SharedMarvin/M-OTH-420-success)
+- [ ] [failure](https://github.com/SharedMarvin/M-OTH-420-failure)
+- [ ] [both](https://github.com/SharedMarvin/M-OTH-420-both) (success & failure)
+- [ ] [badbuild](https://github.com/SharedMarvin/M-OTH-420-badbuild)
