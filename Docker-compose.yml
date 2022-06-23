@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+
+  jenkins:
+    container_name: Jenkins
+    restart: always
+    privileged: true
+    build: ./Jenkins
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - ${DOCKER_SOCK_PATH}:/var/run/docker.sock
+      - ./Jenkins/configuration.yml:/var/configuration.yml
+      - ./Jenkins/jobs.groovy:/var/jobs.groovy
+      - ./Jenkins/clean.groovy:/var/clean.groovy
+      - ./Jenkins/fclean.groovy:/var/fclean.groovy
+    environment:
+      ADMIN_ID: ${JENKINS_ADMIN_ID}
+      ADMIN_NAME: ${JENKINS_ADMIN_NAME}
+      ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD}
+      BUILD_AGENTS: ${JENKINS_NG_AGENTS}
+
+  discord:
+    container_name: Discord
+    build: ./Discord
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./Discord:/usr/src/app
+    depends_on:
+      - jenkins
+    links:
+      - jenkins
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_CLIENTID: ${DISCORD_CLIENTID}
+      DOCUMENTATION_URL: ${DOCUMENTATION_URL}
+      JENKINS_ID: ${JENKINS_ADMIN_ID}
+      JENKINS_API_TOKEN: ${JENKINS_API_TOKEN}
+      JENKINS_HOST: jenkins
+      GITHUB_ORGANIZATION: ${GITHUB_ORGANIZATION}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_RUNNER_REPOSITORY: ${GITHUB_RUNNER_REPOSITORY}
+      RUNNER_SETUP_CMD: ${RUNNER_SETUP_CMD}
+      RUNNER_BUILD_CMD: ${RUNNER_BUILD_CMD}
+      RUNNER_TESTS_CMD: ${RUNNER_TESTS_CMD}
+
+volumes:
+  jenkins_data: {}

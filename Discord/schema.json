@@ -1,0 +1,65 @@
+{
+    "type": "object",
+    "properties": {
+        "module": {
+            "type": "string"
+        },
+        "project": {
+            "type": "string"
+        },
+        "agent-image": {
+            "type": "string"
+        },
+        "build-commands": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "skills": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "tests": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "command": {
+                                    "type": "string"
+                                },
+                                 "expected": {
+                                    "type": "string"
+                                }
+                                },
+                                "required": [
+                                    "name",
+                                    "command",
+                                    "expected"
+                                ]
+                            }
+                        }
+                    },
+                "required": [
+                    "name",
+                    "tests"
+                ]
+            }
+        }
+    },
+    "required": [
+        "module",
+        "project",
+        "agent-image",
+        "build-commands",
+        "skills"
+    ],
+    "additionalProperties": false
+}
