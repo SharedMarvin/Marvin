@@ -12,25 +12,6 @@ folder("Public") {
 
 // JOBS
 
-freeStyleJob('Tools/fclean') {
-    displayName('Clean Public Folder')
-    description('Delete all jobs in the public folder')
-    steps {
-        systemGroovyScriptFile("/var/fclean.groovy") {}
-    }
-}
-
-freeStyleJob('Tools/clean') {
-    displayName('Clean Unused Jobs')
-    description('Delete all jobs in the public folder that haven\'t run in the last 30 days')
-    triggers {
-        cron('@hourly')
-    }
-    steps {
-        systemGroovyScriptFile("/var/clean.groovy") {}
-    }
-}
-
 freeStyleJob('Tools/SendReport') {
     displayName('Send Tests Report')
     description('Send tests report to an user who triggered a job')

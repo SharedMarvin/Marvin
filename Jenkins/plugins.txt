@@ -14,5 +14,4 @@ groovy:latest
 permissive-script-security:latest
 TestComplete:latest
 junit:latest
-multiple-scms:latest
 durable-task:latest
