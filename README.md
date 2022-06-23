@@ -70,6 +70,19 @@ Rename the `sample.env` to `.env`, so Docker-compose can use values inside.
 | RUNNER_TESTS_CMD | Runner command to run the tests |
 | DOCKER_SOCK_PATH | Path to the Docker socket (docker.sock file) |
 | DOCUMENTATION_URL | Link to the documentation (here) |
+
+### Runner
+You may have seen the environment variable `GITHUB_RUNNER_REPOSITORY`.<br />
+You MUST have a runner, he will make the build cmmands, mark tests as passed, failed ect..<br />
+He MUST create two files : `tests_report.xml` and `tests_report.json`.<br />
+The `tests_report.xml` MUST be a valid JUnit XML Report file.
+The `tests_report.json` MUST be the manifest, but for each tests a new property is added : `status`<br />
+The three possible values are :
+- `succeed`
+- `failed`
+- `skipped`
+If the value is `failed` or `skipped`, you can have an addiotional property `message` which will be used as the trace for the student.
+
 ### Run the bot & the instance
 Open a shell in your Marvin directory and run `docker-compose up`<br />
 If you've completed the configuration right, you should have your own instance !
