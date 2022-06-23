@@ -114,5 +114,5 @@ app.post('/report/:Module/:Project/:Snowflake', async (req, res) => {
 })
 
 app.listen(80, () => {
-    console.info(`Discord Express Server listening on port ${port}`)
+    console.info(`Discord Express Server listening on port 80`)
 })
