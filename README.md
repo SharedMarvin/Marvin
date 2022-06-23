@@ -5,7 +5,6 @@ A shared Jenkins instance to run tests for Epitech's projects.
 To use the shared Marvin, you need to setup a webhook on your GitHub repository.<br />
 Your repository MUST be public (so Jenkins can clone it).<br />
 URL of the webhook: `http://localhost:80/webhook/:Module/:Project/:Snowflake`<br />
-We already have one instance : `https://marvin.lqvrent.fr/webhook/:Module/:Project/:Snowflake`<br />
 Parameters :<br />
 - `Module` is the name of the module (ex: `B-PSU-210`)
 - `Project` is the name of the project (ex: `42sh`)
