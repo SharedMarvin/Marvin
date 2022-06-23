@@ -66,6 +66,7 @@ Rename the `sample.env` to `.env`, so Docker-compose can use values inside.
 | GITHUB_TOKEN | Your GitHub token (Can be generated on https://github.com/settings/tokens) |
 | DOCKER_SOCK_PATH | Path to the Docker socket (docker.sock file) |
 | DOCUMENTATION_URL | Link to the documentation (here) |
+| BLACKLISTED_SNOWFLAKES | A list of string of blacklisted users |
 
 ### Run the bot & the instance
 Open a shell in your Marvin directory and run `docker-compose up`<br />

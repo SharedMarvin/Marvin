@@ -41,6 +41,7 @@ services:
       JENKINS_HOST: jenkins
       GITHUB_ORGANIZATION: ${GITHUB_ORGANIZATION}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
+      BLACKLISTED_SNOWFLAKES: ${BLACKLISTED_SNOWFLAKES}
 
 volumes:
   jenkins_data: {}

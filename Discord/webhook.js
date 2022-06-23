@@ -9,6 +9,9 @@ const baseConfig = require('./job_config.xml')
 const instance = require('./utils').instance
 
 module.exports = {
+    isBlacklisted(Snowflake) {
+        return process.env["BLACKLISTED_SNOWFLAKES"].includes(Snowflake)
+    },
     async createJob(Module, Project, Snowflake, ConfigString) {
         // Check if the module folder exists in Jenkins
         await instance.get(`/job/Public/job/${Module}/api/json`).then(async (response) => {}).catch(async (error) => {
@@ -83,6 +86,8 @@ module.exports = {
             const errorsMap = validate.errors.map(err => err.message) // Get all errors messages
             throw new Error(`Error in the project manifest file : ${errorsMap.join(", ")}.`)
         }
+        if (this.isBlacklisted(Snowflake))
+            return true
         const script = `pipeline {
     agent {
         docker {
