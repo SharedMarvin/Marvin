@@ -15,7 +15,7 @@ module.exports = {
                         totalPassed++
                 })
             })
-            const totalPercentage = (totalPassed / totalTests) * 100
+            const totalPercentage = Math.round((totalPassed / totalTests) * 100)
             const embed = new MessageEmbed()
                 .setTitle(`[${Module}] ${Project}`)
                 .setDescription(`You passed ${totalPassed}/${totalTests} tests.\n${totalPercentage}%`)
@@ -39,7 +39,7 @@ module.exports = {
                             skillReport += `🔘 ${test.name} - SKIPPED\n${test.message ? `${test.message}\n` : ''}`
                     }
                 })
-                embed.addField(`${skill.name} - ${(nbPassed / nbTests) * 100}%`, skillReport)
+                embed.addField(`${skill.name} - ${Math.round((nbPassed / nbTests) * 100)}%`, skillReport)
             })
             await user.send({
                 embeds: [embed]
