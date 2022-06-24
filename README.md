@@ -137,7 +137,7 @@ If you've completed the configuration right, you should have your own instance !
 #### Semester 5
 #### Semester 6
 #### Others
-Tests we wrote for debug, testing, templating...
+Tests wrote for debug, testing, templating...
 ###### M-OTH-420
 - [ ] [ctemplate](https://github.com/SharedMarvin/M-OTH-420-ctemplate)
 - [ ] [csfmltemplate](https://github.com/SharedMarvin/M-OTH-420-csfmltemplate)
@@ -145,4 +145,4 @@ Tests we wrote for debug, testing, templating...
 - [x] [success](https://github.com/SharedMarvin/M-OTH-420-success)
 - [x] [failure](https://github.com/SharedMarvin/M-OTH-420-failure)
 - [x] [both](https://github.com/SharedMarvin/M-OTH-420-both) (success & failure)
-- [ ] [badbuild](https://github.com/SharedMarvin/M-OTH-420-badbuild)
+- [x] [badbuild](https://github.com/SharedMarvin/M-OTH-420-badbuild)
