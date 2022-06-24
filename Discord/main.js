@@ -103,7 +103,6 @@ app.post('/report/:Module/:Project/:Snowflake', async (req, res) => {
     const payload = req.body
 
     try {
-        console.log(req.query)
         await reportHandler.handle(Module, Project, Snowflake, payload, client, commit_hash, commit_message, commit_time)
     }
     catch (error) {

@@ -148,11 +148,11 @@ module.exports = {
                     ),
                     string (
                         name: 'COMMIT_MESSAGE',
-                        value: '${payload.commits.length > 0 ? payload.commits[0].message : 'None.'}'
+                        value: '${payload.commits.length > 0 ? encodeURI(payload.commits[0].message) : 'No commit message'}'
                     ),
                     string (
                         name: 'COMMIT_TIME',
-                        value: '${payload.commits.length > 0 ? payload.commits[0].timestamp : 'null'}'
+                        value: '${payload.commits.length > 0 ? payload.commits[0].timestamp : '0'}'
                     ),
                     string (
                         name: 'MODULE',
