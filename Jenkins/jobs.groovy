@@ -17,13 +17,16 @@ freeStyleJob('Tools/SendReport') {
     description('Send tests report to an user who triggered a job')
     concurrentBuild()
     parameters {
-        stringParam("COMMIT_HASH", "", "The commit that triggered the job")
+        stringParam("COMMIT_HASH", "", "The commit that triggered the job.")
+        stringParam("COMMIT_MESSAGE", "", "The commit message that triggered the job.")
+        stringParam("COMMIT_TIME", "", "The commit timestamp that triggered the job.")
         stringParam("MODULE", "", "Module of the triggered job project.")
         stringParam("PROJECT", "", "Triggered job project.")
         stringParam("DISCORD_SNOWFLAKE", "", "Discord Snowflake ID of the user to send the report to.")
         stringParam("REPORT_AS_JSON", "", "Report file as JSON.")
     }
     steps {
-        shell('curl -X POST -H "Content-Type: application/json" -d "$REPORT_AS_JSON" "http://Discord:80/report/$MODULE/$PROJECT/$DISCORD_SNOWFLAKE?commit_hash=$COMMIT_HASH"')
+        shell('curl -X POST -H "Content-Type: application/json" -d "$REPORT_AS_JSON" \
+        "http://Discord:80/report/$MODULE/$PROJECT/$DISCORD_SNOWFLAKE?commit_hash=$COMMIT_HASH&commit_message=null&commit_time=$COMMIT_TIME"')
     }
 }

@@ -99,11 +99,12 @@ app.post('/webhook/:Module/:Project/:Snowflake', async (req, res) => {
 // Tests report handler
 app.post('/report/:Module/:Project/:Snowflake', async (req, res) => {
     const { Module, Project, Snowflake } = req.params
-    const { commit_hash } = req.query
+    const { commit_hash, commit_message, commit_time } = req.query
     const payload = req.body
 
     try {
-        await reportHandler.handle(Module, Project, Snowflake, commit_hash, payload, client)
+        console.log(req.query)
+        await reportHandler.handle(Module, Project, Snowflake, payload, client, commit_hash, commit_message, commit_time)
     }
     catch (error) {
         res.status(400).json({ status: "KO", message: `${error}` })

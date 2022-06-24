@@ -147,6 +147,14 @@ module.exports = {
                         value: '${payload.commits.length > 0 ? payload.commits[0].id : '?'}'
                     ),
                     string (
+                        name: 'COMMIT_MESSAGE',
+                        value: '${payload.commits.length > 0 ? payload.commits[0].message : 'None.'}'
+                    ),
+                    string (
+                        name: 'COMMIT_TIME',
+                        value: '${payload.commits.length > 0 ? payload.commits[0].timestamp : 'null'}'
+                    ),
+                    string (
                         name: 'MODULE',
                         value: '${Module}'
                     ),
