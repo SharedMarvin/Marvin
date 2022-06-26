@@ -140,8 +140,10 @@ If you've completed the configuration right, you should have your own instance !
 Tests wrote for debug, testing, templating...
 ###### M-OTH-420
 - [ ] [ctemplate](https://github.com/SharedMarvin/M-OTH-420-ctemplate)
+- [ ] [ctemplatewref](https://github.com/SharedMarvin/M-OTH-420-ctemplatewref)
 - [ ] [csfmltemplate](https://github.com/SharedMarvin/M-OTH-420-csfmltemplate)
 - [ ] [cpptemplate](https://github.com/SharedMarvin/M-OTH-420-cpptemplate)
+- [ ] [cpptemplatewref](https://github.com/SharedMarvin/M-OTH-420-cpptemplatewref)
 - [x] [success](https://github.com/SharedMarvin/M-OTH-420-success)
 - [x] [failure](https://github.com/SharedMarvin/M-OTH-420-failure)
 - [x] [both](https://github.com/SharedMarvin/M-OTH-420-both) (success & failure)
