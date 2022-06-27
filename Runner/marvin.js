@@ -68,7 +68,10 @@ function build() {
         })
     })
     saveReport()
-    console.log(`\nBuild completed with status : ${succeed ? "succeed" : "failed"}`)
+    if (manifest['build-commands'].length > 0)
+        console.log(`\nBuild completed with status : ${succeed ? "succeed" : "failed"}`)
+    else
+        console.log("No build command for this project")
     process.exit(succeed ? 0 : 1)
 }
 
@@ -83,12 +86,13 @@ function tests() {
                 console.log(test.command)
                 const process = execSync(test.command)
                 const output = process.toString("utf8")
+                console.log(output)
                 if (test.expected != output) {
                     test.status = 'failed'
                     test.message = `Got: "${output}"\nBut expected: "${test.expected}"`
                 }
                 else
-                test.status = 'succeed'
+                    test.status = 'succeed'
                 console.log(`===`)
             }
             catch (e) {
