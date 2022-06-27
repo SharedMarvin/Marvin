@@ -96,7 +96,7 @@ module.exports = {
             containerPerStageRoot true
             args '-v /var/marvin:/var/marvin'
             customWorkspace '/var/jenkins_home/agent/${Module}/${Project}/${Snowflake}/workspace'
-            reuseNode false
+            reuseNode true
         }
     }
     environment {
