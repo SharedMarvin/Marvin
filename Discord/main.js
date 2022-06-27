@@ -73,10 +73,15 @@ client.login(process.env.DISCORD_TOKEN)
 
 var express = require('express')
 var bodyParser = require('body-parser')
+var cons = require('consolidate')
 var app = express()
 const webhookHandler = require('./webhook')
 const reportHandler = require('./report')
+const instance = require('./utils').instance
 
+app.engine('html', cons.hogan);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 app.use(bodyParser.json())
 app.set('json spaces', 4)
 
@@ -99,11 +104,11 @@ app.post('/webhook/:Module/:Project/:Snowflake', async (req, res) => {
 // Tests report handler
 app.post('/report/:Module/:Project/:Snowflake', async (req, res) => {
     const { Module, Project, Snowflake } = req.params
-    const { commit_hash, commit_message, commit_time } = req.query
+    const { commit_hash, commit_message, commit_time, build_number } = req.query
     const payload = req.body
 
     try {
-        await reportHandler.handle(Module, Project, Snowflake, payload, client, commit_hash, commit_message, commit_time)
+        await reportHandler.handle(Module, Project, Snowflake, payload, client, commit_hash, commit_message, commit_time, build_number)
     }
     catch (error) {
         res.status(400).json({ status: "KO", message: `${error}` })
@@ -111,6 +116,74 @@ app.post('/report/:Module/:Project/:Snowflake', async (req, res) => {
     }
     res.status(200).json({ status: "OK", message: "Success." })
     return true
+})
+
+// View to check tests with details
+app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
+    const { Module, Project, Snowflake, BuildNb } = req.params
+
+    try {
+        // Get tests report
+        const job = (await instance.get(`/job/Tools/job/SendReport/${BuildNb}/api/json`)).data
+        let parameters = {}
+        job.actions.forEach(action => {
+            if (action["_class"] == "hudson.model.ParametersAction") {
+                action.parameters.forEach(obj => {
+                    parameters[obj.name] = obj.value;
+                })
+            }
+        })
+        // Check if the current request is valid
+        if (!Object.keys(parameters).length)
+            throw "Bad request"
+        if (parameters.DISCORD_SNOWFLAKE != Snowflake || parameters.MODULE != Module || parameters.PROJECT != Project)
+            throw "Bad request"
+        // Compute some data inside report
+        const report = JSON.parse(parameters.REPORT_AS_JSON)
+        let totalTests = 0
+        let totalPassed = 0
+        report.skills.forEach(skill => {
+            totalTests += skill.tests.length
+            skill.total = skill.tests.length
+            skill.passed = 0
+            skill.tests.forEach(test => {
+                if (test.status == 'succeed') {
+                    totalPassed++
+                    skill.passed++
+                    test.status = '✅'
+                }
+                else if (test.status == 'failed') {
+                    test.status = '❌'
+                }
+                else if (test.status == 'skipped') {
+                    test.status = '⚠️'
+                }
+                if (test.message) {
+                    test.message = test.message.replace(/\n/g, '<br />')
+                }
+            })
+            skill.percentage = Math.round(skill.passed / skill.total * 100)
+            skill.color = skill.percentage >= 70 ? 'success' : skill.percentage >= 35 ? 'warning' : 'danger'
+        })
+        const dt = new Date(parameters.COMMIT_TIME)
+        const totalPercentage = Math.round((totalPassed / totalTests) * 100)
+        res.render('report', {
+            Module: Module,
+            Project: Project,
+            CommitMessage: decodeURI(parameters.COMMIT_MESSAGE),
+            CommitDate: `${(dt.getDate()).toString().padStart(2, '0')}/${(dt.getMonth() + 1).toString().padStart(2, '0')}/${dt.getFullYear().toString().padStart(4, '0')} ${dt.getHours().toString().padStart(2, '0')}:${dt.getMinutes().toString().padStart(2, '0')}`,
+            TotalPercentage: totalPercentage,
+            TotalTests: totalTests,
+            TotalPassed: totalPassed,
+            TotalColor: totalPercentage >= 70 ? 'success' : totalPercentage > 35 ? 'warning' : 'danger',
+            Skills: report.skills,
+        })
+        return true
+    }
+    catch (error) {
+        res.status(400).json({ status: "KO", message: `Internal error` })
+        return false
+    }
 })
 
 app.listen(80, () => {

@@ -1,7 +1,7 @@
 const { MessageEmbed, Permissions } = require('discord.js');
 
 module.exports = {
-    async handle(Module, Project, Snowflake, payload, DiscordClient, commit_hash, commit_message, commit_time) {
+    async handle(Module, Project, Snowflake, payload, DiscordClient, commit_hash, commit_message, commit_time, build_number) {
         const user = await DiscordClient.users.fetch(Snowflake)
         if (!user)
             throw new Error('Unable to find your Discord account.')
@@ -18,10 +18,11 @@ module.exports = {
             const totalPercentage = Math.round((totalPassed / totalTests) * 100)
             const embed = new MessageEmbed()
                 .setTitle(`[${Module}] ${Project}`)
+                .setURL(`http${process.env["SSL"] ? 's' : ''}://${process.env["DOMAIN"]}/report/${Module}/${Project}/${Snowflake}/${build_number}`)
                 .setDescription(`You passed ${totalPassed}/${totalTests} tests.\n${totalPercentage}%`)
                 .setTimestamp(new Date(commit_time.replace(/ /g, '+')))
                 .setFooter({ text: `commit: "${commit_message}"\nhash: ${commit_hash}` })
-                .setColor(totalPercentage > 75 ? '#62c22f' : totalPercentage > 25 ? '#ed822f' : '#f03737')
+                .setColor(totalPercentage > 70 ? '#62c22f' : totalPercentage > 35 ? '#ed822f' : '#f03737')
             payload.skills.forEach(skill => {
                 let nbTests = skill.tests.length
                 let nbPassed = 0
@@ -29,14 +30,14 @@ module.exports = {
                 skill.tests.forEach(test => {
                     switch (test.status) {
                         case 'succeed':
-                            skillReport += `🟢 ${test.name} - PASSED\n`
+                            skillReport += `✅ ${test.name}\n`
                             nbPassed++
                             break
                         case 'failed':
-                            skillReport += `🔴 ${test.name} - FAILED\n${test.message ? `${test.message}\n` : ''}`
+                            skillReport += `❌ ${test.name} ${test.message && test.message == "Build failed" ? " - BUILD FAILED" : ""}\n`
                             break
                         default:
-                            skillReport += `🔘 ${test.name} - SKIPPED\n${test.message ? `${test.message}\n` : ''}`
+                            skillReport += `⚠️ ${test.name} - SKIPPED\n`
                     }
                 })
                 embed.addField(`${skill.name} - ${Math.round((nbPassed / nbTests) * 100)}%`, skillReport)

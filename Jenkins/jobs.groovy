@@ -27,6 +27,6 @@ freeStyleJob('Tools/SendReport') {
     }
     steps {
         shell('curl -X POST -H "Content-Type: application/json" -d "$REPORT_AS_JSON" \
-        "http://Discord:80/report/$MODULE/$PROJECT/$DISCORD_SNOWFLAKE?commit_hash=$COMMIT_HASH&commit_message=$COMMIT_MESSAGE&commit_time=$COMMIT_TIME"')
+        "http://Discord:80/report/$MODULE/$PROJECT/$DISCORD_SNOWFLAKE?commit_hash=$COMMIT_HASH&commit_message=$COMMIT_MESSAGE&commit_time=$COMMIT_TIME&build_number=$BUILD_NUMBER"')
     }
 }

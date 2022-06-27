@@ -43,6 +43,7 @@ services:
       JENKINS_HOST: jenkins
       DOCUMENTATION_URL: ${DOCUMENTATION_URL}
       BLACKLISTED_SNOWFLAKES: ${BLACKLISTED_SNOWFLAKES}
+      DOMAIN: ${DOMAIN}
 
 volumes:
   jenkins_data: {}

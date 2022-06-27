@@ -16,8 +16,10 @@
     "ajv": "^8.11.0",
     "axios": "^0.26.1",
     "body-parser": "^1.20.0",
+    "consolidate": "^0.16.0",
     "discord.js": "^13.6.0",
     "express": "^4.17.3",
+    "hogan.js": "^3.0.2",
     "xml-js": "^1.6.11"
   }
 }

@@ -66,6 +66,8 @@ Rename the `sample.env` to `.env`, so Docker-compose can use values inside.
 | DOCKER_SOCK_PATH | Path to the Docker socket (docker.sock file) |
 | DOCUMENTATION_URL | Link to the documentation (here) |
 | BLACKLISTED_SNOWFLAKES | A list of string of blacklisted users |
+| SSL | Boolean, enable https in report link if true |
+| DOMAIN | Domain of the instance (ex: `localhost` or `marvin.com`) |
 
 ### Run the bot & the instance
 Open a shell in your Marvin directory and run `docker-compose up`<br />
