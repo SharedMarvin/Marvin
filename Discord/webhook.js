@@ -139,6 +139,7 @@ module.exports = {
                 REPORT = readFile(file: 'tests_report.json').trim()
             }
             echo "========== COVERAGE LOGS =========="
+            sh 'make tests_run || exit 0'
             sh 'gcovr --exclude=tests/'
             sh 'gcovr --exclude=tests/ --branches'
             sh 'gcovr --exclude=tests/ --xml coverage_report.xml'
