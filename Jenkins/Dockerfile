@@ -17,4 +17,4 @@ RUN apt-get -y update && \
     apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt

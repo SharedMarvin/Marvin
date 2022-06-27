@@ -107,7 +107,7 @@ module.exports = {
             steps {
                 sh '''
                     set +x
-                    apt-get update && apt-get install -y git nodejs npm
+                    apt-get update && apt-get install -y git nodejs npm gcovr
                     rm -rf cloning-area
                     cp /var/marvin/* .
                     npm install
@@ -138,6 +138,12 @@ module.exports = {
             script {
                 REPORT = readFile(file: 'tests_report.json').trim()
             }
+            echo "========== COVERAGE LOGS =========="
+            sh 'gcovr --exclude=tests/'
+            sh 'gcovr --exclude=tests/ --branches'
+            sh 'gcovr --exclude=tests/ --xml coverage_report.xml'
+            publishCoverage adapters: [cobertura('coverage_report.xml')]
+            echo "==================================="
             build (
                 propagate: false,
                 wait: false,
