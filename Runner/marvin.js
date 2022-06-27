@@ -75,9 +75,11 @@ function build() {
 // TESTS SUITE RUNNER
 function tests() {
     manifest.skills.forEach(skill => {
+        console.log(skill.name)
         skill.tests.forEach(test => {
             try {
-                console.log(skill.name + '-' + test.name)
+                console.log(`===`)
+                console.log(test.name)
                 console.log(test.command)
                 const process = execSync(test.command)
                 const output = process.toString("utf8")
@@ -86,7 +88,8 @@ function tests() {
                     test.message = `Got: "${output}"\nBut expected: "${test.expected}"`
                 }
                 else
-                    test.status = 'succeed'
+                test.status = 'succeed'
+                console.log(`===`)
             }
             catch (e) {
                 test.status = 'failed'
