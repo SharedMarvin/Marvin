@@ -200,6 +200,7 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
             CoverageBranchesTotal: covBranchesTotal,
             CoverageBranchesPercentage: (covBranchesPassed / covBranchesTotal * 100) || 0,
             CoverageBranchesColor: (covBranchesPassed / covBranchesTotal * 100) >= 70 ? 'success' : (covBranchesPassed / covBranchesTotal * 100) > 35 ? 'warning' : 'danger',
+            ShowCoverage: covLinesPassed > 0 || covBranchesPassed > 0 ? true : false,
         })
         return true
     }
