@@ -10,6 +10,12 @@
         "agent-image": {
             "type": "string"
         },
+        "enable-coding-style": {
+            "type": "boolean"
+        },
+        "enable-coverage": {
+            "type": "boolean"
+        },
         "build-commands": {
             "type": "array",
             "items": {
@@ -58,6 +64,8 @@
         "module",
         "project",
         "agent-image",
+        "enable-coding-style",
+        "enable-coverage",
         "build-commands",
         "skills"
     ],
