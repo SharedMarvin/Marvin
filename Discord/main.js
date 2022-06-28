@@ -167,6 +167,19 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
         })
         const dt = new Date(parameters.COMMIT_TIME)
         const totalPercentage = Math.round((totalPassed / totalTests) * 100)
+        let covLinesPassed = 0;
+        let covLinesTotal = 0;
+        let covBranchesPassed = 0;
+        let covBranchesTotal = 0;
+        if (parameters.COVERAGE_LINES) {
+            const regex = /TOTAL[' ']{0,}[0-9]{0,}[' ']{0,}[0-9]{0,}[' ']{0,}.*%/gm
+            const coverageLinesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
+            const coverageBranchesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
+            covLinesPassed = parseInt(coverageLinesData[1])
+            covLinesTotal = parseInt(coverageLinesData[2])
+            covBranchesPassed = parseInt(coverageBranchesData[1])
+            covBranchesTotal = parseInt(coverageBranchesData[2])
+        }
         res.render('report', {
             Module: Module,
             Project: Project,
@@ -177,6 +190,16 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
             TotalPassed: totalPassed,
             TotalColor: totalPercentage >= 70 ? 'success' : totalPercentage > 35 ? 'warning' : 'danger',
             Skills: report.skills,
+            CoverageLines: parameters.COVERAGE_LINES ? parameters.COVERAGE_LINES.replace(/\n/g, '<br />').trim() : null,
+            CoverageLinesPassed: covLinesPassed,
+            CoverageLinesTotal: covLinesTotal,
+            CoverageLinesPercentage: (covLinesPassed / covLinesTotal * 100) || 0,
+            CoverageLinesColor: (covLinesPassed / covLinesTotal * 100) >= 70 ? 'success' : (covLinesPassed / covLinesTotal * 100) > 35 ? 'warning' : 'danger',
+            CoverageBranches: parameters.COVERAGE_BRANCHES ? parameters.COVERAGE_BRANCHES.replace(/\n/g, '<br />').trim() : null,
+            CoverageBranchesPassed: covBranchesPassed,
+            CoverageBranchesTotal: covBranchesTotal,
+            CoverageBranchesPercentage: (covBranchesPassed / covBranchesTotal * 100) || 0,
+            CoverageBranchesColor: (covBranchesPassed / covBranchesTotal * 100) >= 70 ? 'success' : (covBranchesPassed / covBranchesTotal * 100) > 35 ? 'warning' : 'danger',
         })
         return true
     }

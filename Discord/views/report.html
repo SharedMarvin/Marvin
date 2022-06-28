@@ -63,8 +63,25 @@
                     </div>
                 </div>
                 <!-- /Coding style --> }}
-                {{! <!-- Coverage -->
-                <!-- /Coverage --> }}
+                {{#CoverageLines}}
+                <!-- Code Coverage -->
+                <div class="box">
+                    <div class="columns">
+                        <div class="column is-one-third has-text-centered">
+                            <h2 class="subtitle">Code Coverage</h2>
+                            <progress class="progress mb-2 is-{{ CoverageLinesColor }}" value="{{ CoverageLinesPercentage }}" max="100">{{ CoverageLinesPercentage }}%</progress>
+                            <p class="mb-5">Lines: {{ CoverageLinesPassed }}/{{ CoverageLinesTotal }} - {{ CoverageLinesPercentage }}%</p>
+                            <progress class="progress mb-2 is-{{ CoverageBranchesColor }}" value="{{ CoverageBranchesPercentage }}" max="100">{{ CoverageBranchesPercentage }}%</progress>
+                            <p>Branches: {{ CoverageBranchesPassed }}/{{ CoverageBranchesTotal }} - {{ CoverageBranchesPercentage }}%</p>
+                        </div>
+                        <div class="column is-size-7">
+                            <pre class="mb-1">{{{CoverageLines}}}</pre>
+                            <pre>{{{CoverageBranches}}}</pre>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Code Coverage -->
+                {{/CoverageLines}}
                 <!-- Tests report -->
                 {{#Skills}}
                 <div class="box">
@@ -72,7 +89,7 @@
                     <div class="columns">
                         <div class="column is-one-third has-text-centered">
                             <h2 class="subtitle">{{ name }}</h2>
-                            <progress class="progress is-large is-{{ color }}" value="{{ percentage }}" max="100">{{ percentage }}%</progress>
+                            <progress class="progress is-{{ color }}" value="{{ percentage }}" max="100">{{ percentage }}%</progress>
                             <p>
                                 <strong>{{ passed }}/{{ total }} - {{ percentage }}%</strong>
                             </p>
@@ -84,7 +101,7 @@
                                     <strong>{{ status }} {{ name }} </strong>
                                     {{#message}}
                                     <br />
-                                    <blockquote class="ml-5 mt-2">
+                                    <blockquote class="ml-5 mt-2 is-size-7">
                                         <pre>{{{ message }}}</pre>
                                     </blockquote>
                                     <br />

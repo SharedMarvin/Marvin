@@ -24,6 +24,8 @@ freeStyleJob('Tools/SendReport') {
         stringParam("PROJECT", "", "Triggered job project.")
         stringParam("DISCORD_SNOWFLAKE", "", "Discord Snowflake ID of the user to send the report to.")
         stringParam("REPORT_AS_JSON", "", "Report file as JSON.")
+        stringParam("COVERAGE_LINES", "", "Coverage report for lines.")
+        stringParam("COVERAGE_BRANCHES", "", "Coverage report for branches.")
     }
     steps {
         shell('curl -X POST -H "Content-Type: application/json" -d "$REPORT_AS_JSON" \
