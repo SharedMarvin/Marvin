@@ -171,7 +171,7 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
         let covLinesTotal = 0;
         let covBranchesPassed = 0;
         let covBranchesTotal = 0;
-        if (parameters.COVERAGE_LINES) {
+        if (report["enable-coverage"] && parameters.COVERAGE_LINES) {
             const regex = /TOTAL[' ']{0,}[0-9]{0,}[' ']{0,}[0-9]{0,}[' ']{0,}.*%/gm
             const coverageLinesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
             const coverageBranchesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
@@ -200,7 +200,7 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
             CoverageBranchesTotal: covBranchesTotal,
             CoverageBranchesPercentage: (covBranchesPassed / covBranchesTotal * 100) || 0,
             CoverageBranchesColor: (covBranchesPassed / covBranchesTotal * 100) >= 70 ? 'success' : (covBranchesPassed / covBranchesTotal * 100) > 35 ? 'warning' : 'danger',
-            ShowCoverage: covLinesPassed > 0 || covBranchesPassed > 0 ? true : false,
+            ShowCoverage: report["enable-coverage"] && (covLinesPassed > 0 || covBranchesPassed) > 0 ? true : false,
         })
         return true
     }

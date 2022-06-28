@@ -136,7 +136,7 @@ module.exports = {
         }
     }
     post {
-        always {
+        always {${manifest["enable-coverage"] ? `
             echo "========== COVERAGE LOGS =========="
             sh 'make tests_run || exit 0'
             sh 'gcovr --exclude=tests/'
@@ -144,11 +144,12 @@ module.exports = {
             sh 'gcovr --exclude=tests/ --branches > coverage_report_branches.txt'
             sh 'gcovr --exclude=tests/ --xml coverage_report.xml'
             publishCoverage adapters: [cobertura('coverage_report.xml')]
-            echo "==================================="
+            echo "==================================="`: ''}
             script {
-                REPORT = readFile(file: 'tests_report.json').trim()
+                REPORT = readFile(file: 'tests_report.json').trim()${manifest["enable-coverage"] ? `
                 COVERAGE_LINES = readFile(file: 'coverage_report_lines.txt').trim()
                 COVERAGE_BRANCHES = readFile(file: 'coverage_report_branches.txt').trim()
+                ` : ''}
             }
             build (
                 propagate: false,
