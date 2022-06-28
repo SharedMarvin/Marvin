@@ -155,4 +155,5 @@ Tests wrote for debug, testing, templating...
 - [x] Implement web reports (for details)
 - [x] Implement coverage
 - [ ] Implement coding style
-- [ ] Implement tests for M-OTH-420 modules
+- [ ] Dynamic package installation (apt for ubuntu, dnf for Fedora, ...)
+- [ ] Implement tests for M-OTH-420 module
