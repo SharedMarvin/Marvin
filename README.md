@@ -150,3 +150,9 @@ Tests wrote for debug, testing, templating...
 - [x] [failure](https://github.com/SharedMarvin/M-OTH-420-failure)
 - [x] [both](https://github.com/SharedMarvin/M-OTH-420-both) (success & failure)
 - [x] [badbuild](https://github.com/SharedMarvin/M-OTH-420-badbuild)
+### Todo list (for v1.1.0)
+- [x] Send reports on Discord server
+- [x] Implement web reports (for details)
+- [x] Implement coverage
+- [ ] Implement coding style
+- [ ] Implement tests for M-OTH-420 modules
