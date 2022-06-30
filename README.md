@@ -158,7 +158,3 @@ Tests wrote for debug, testing, templating...
 - [x] Slave agent
 - [ ] Implement coding style
 - [ ] Implement tests for M-OTH-420 module
-
-### Known issues
-- Coverage report : Error reported by XML parser
-- Warning when connecting to Slave
