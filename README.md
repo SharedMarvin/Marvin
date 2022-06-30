@@ -68,6 +68,7 @@ Rename the `sample.env` to `.env`, so Docker-compose can use values inside.
 | BLACKLISTED_SNOWFLAKES | A list of string of blacklisted users |
 | SSL | Boolean, enable https in report link if true |
 | DOMAIN | Domain of the instance (ex: `localhost` or `marvin.com`) |
+| SSH_FILE | Path to the SSH public key (key.pub) used to connect to the slave |
 
 ### Run the bot & the instance
 Open a shell in your Marvin directory and run `docker-compose up`<br />
@@ -154,6 +155,10 @@ Tests wrote for debug, testing, templating...
 - [x] Send reports on Discord server
 - [x] Implement web reports (for details)
 - [x] Implement coverage
+- [x] Slave agent
 - [ ] Implement coding style
-- [ ] Dynamic package installation (apt for ubuntu, dnf for Fedora, ...)
 - [ ] Implement tests for M-OTH-420 module
+
+### Known issues
+- Coverage report : Error reported by XML parser
+- Warning when connecting to Slave

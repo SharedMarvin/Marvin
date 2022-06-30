@@ -90,65 +90,62 @@ module.exports = {
             return true
         const script = `pipeline {
     agent {
-        docker {
-            image '${manifest["agent-image"]}'
-            args '-u root'
-            containerPerStageRoot true
-            args '-v /var/marvin:/var/marvin'
-            customWorkspace '/var/jenkins_home/agent/${Module}/${Project}/${Snowflake}/workspace'
-            reuseNode true
-        }
+        label "Slave"
     }
     environment {
-        REPORT = '{}'
-        COVERAGE_LINES = ''
-        COVERAGE_BRANCHES = ''
+        REPORT = "{}"
+        COVERAGE_LINES = "code coverage is disabled for [${Module}] ${Project}"
+        COVERAGE_BRANCHES = "code coverage is disabled for [${Module}] ${Project}"
     }
     stages {
         stage('Setup') {
             steps {
                 sh '''
                     set +x
-                    apt-get update && apt-get install -y git nodejs npm gcovr
                     rm -rf cloning-area
-                    cp /var/marvin/* .
-                    npm install
-                    git clone https://github.com/${process.env["GITHUB_ORGANIZATION"]}/${Module}-${Project}.git cloning-area && mv cloning-area/* . && rm -rf cloning-area
-                    git clone ${payload.repository.clone_url} cloning-area && mv cloning-area/* . && rm -rf cloning-area
+                    rm -rf marvin@tmp
+                    mkdir marvin@tmp
+                    cp /var/marvin/* marvin@tmp/
+                    cd marvin@tmp/ && npm ci --production && cd -
+                    git clone ${payload.repository.clone_url} cloning-area && mv cloning-area/* . && rm -rf cloning-area${manifest["enable-coding-style"] ? `
+                    git clone https://github.com/CustomEntity/crNormz.git cloning-area && cd cloning-area && sudo ./crnormz_installer.sh && cd - && rm -rf cloning-area && crnormz --raw-output` : ''}
+                    git clone https://github.com/${process.env["GITHUB_ORGANIZATION"]}/${Module}-${Project}.git cloning-area && mv cloning-area/* marvin@tmp/ && rm -rf cloning-area
                     set -x
-                    node marvin.js --setup
                 '''
+                echo "========== SETUP LOGS =========="
+                sh 'cd marvin@tmp && node marvin.js --setup && cd -'
+                echo "================================"
             }
         }
         stage('Build') {
             steps {
                 echo "========== BUILD LOGS =========="
-                sh 'node marvin.js --build'
+                sh 'cd marvin@tmp && node marvin.js --build && cd -'
                 echo "================================"
             }
         }
         stage('Testing') {
             steps {
                 echo "========== TESTS LOGS =========="
-                sh 'node marvin.js --tests'
+                sh 'cd marvin@tmp && node marvin.js --tests && cd -'
                 echo "================================"
             }
         }
     }
     post {
-        always {${manifest["enable-coverage"] ? `
+        always {${manifest["enable-coverage"] || true ? `
             echo "========== COVERAGE LOGS =========="
             sh 'make tests_run || exit 0'
             sh 'gcovr --exclude=tests/'
-            sh 'gcovr --exclude=tests/ > coverage_report_lines.txt'
-            sh 'gcovr --exclude=tests/ --branches > coverage_report_branches.txt'
-            sh 'gcovr --exclude=tests/ --xml coverage_report.xml'
-            publishCoverage adapters: [cobertura('coverage_report.xml')]
+            sh 'gcovr --exclude=tests/ > marvin@tmp/coverage_report_lines.txt'
+            sh 'gcovr --exclude=tests/ --branches > marvin@tmp/coverage_report_branches.txt'
+            sh 'gcovr --exclude=tests/ --xml marvin@tmp/coverage_report.xml'
+            publishCoverage adapters: [cobertura('marvin@tmp/coverage_report.xml')]
             echo "==================================="`: ''}
             script {
-                REPORT = readFile(file: 'tests_report.json').trim()${manifest["enable-coverage"] ? `
-                COVERAGE_LINES = readFile(file: 'coverage_report_lines.txt').trim()
-                COVERAGE_BRANCHES = readFile(file: 'coverage_report_branches.txt').trim()
+                REPORT = readFile(file: 'marvin@tmp/tests_report.json').trim()${manifest["enable-coverage"] || true ? `
+                COVERAGE_LINES = readFile(file: 'marvin@tmp/coverage_report_lines.txt').trim()
+                COVERAGE_BRANCHES = readFile(file: 'marvin@tmp/coverage_report_branches.txt').trim()
                 ` : ''}
             }
             build (
@@ -195,11 +192,11 @@ module.exports = {
                 job: 'Tools/SendReport'
             )
             echo "=== WORKSPACE BEFORE CLEANUP ==="
-            sh 'ls -ltr'
+            sh 'ls -ltR'
             echo "================================"
             junit (
                 skipMarkingBuildUnstable: true,
-                testResults: 'tests_report.xml'
+                testResults: 'marvin@tmp/tests_report.xml'
             )
             cleanWs (deleteDirs: true)
         }

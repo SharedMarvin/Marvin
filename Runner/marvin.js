@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { chdir } = require('process')
 const manifest = require('./manifest.json')
 const execSync = require('child_process').execSync
 
@@ -33,8 +34,8 @@ ${createSkills()}</testsuites>`
 
 function saveReport() {
     const xml = createXml()
-    fs.writeFileSync('tests_report.xml', xml)
-    fs.writeFileSync('tests_report.json', JSON.stringify(manifest))
+    fs.writeFileSync('marvin\@tmp/tests_report.xml', xml)
+    fs.writeFileSync('marvin\@tmp/tests_report.json', JSON.stringify(manifest))
 }
 // SETUP
 function setup () {
@@ -116,14 +117,17 @@ process.argv.forEach(arg => {
     switch (arg) {
         case "--setup":
             validArg = true
+            chdir("..")
             setup()
             break
         case "--build":
             validArg = true
+            chdir("..")
             build()
             break
         case "--tests":
             validArg = true
+            chdir("..")
             tests()
             break
     }

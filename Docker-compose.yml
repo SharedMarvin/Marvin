@@ -10,15 +10,32 @@ services:
       - 8080:8080
     volumes:
       - jenkins_data:/var/jenkins_home
-      - ${DOCKER_SOCK_PATH}:/var/run/docker.sock
       - ./Jenkins/configuration.yml:/var/configuration.yml
       - ./Jenkins/jobs.groovy:/var/jobs.groovy
       - ./Runner:/var/marvin
+      - ${SSH_FILE}:/var/key
+      - ${SSH_FILE}.pub:/var/key.pub
     environment:
       ADMIN_ID: ${JENKINS_ADMIN_ID}
       ADMIN_NAME: ${JENKINS_ADMIN_NAME}
       ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD}
-      BUILD_AGENTS: ${JENKINS_NG_AGENTS}
+      NB_AGENTS: ${JENKINS_NB_AGENTS}
+
+  slave:
+    container_name: Slave
+    restart: always
+    privileged: true
+    ports:
+      - 22:22
+    build:
+      context: ./Slave
+    volumes:
+      - ${SSH_FILE}.pub:/root/.ssh/authorized_keys
+      - ./Runner:/var/marvin
+      - ./Slave/agent.jar:/bin/agent.jar
+      - ./Slave/slave.sh:/bin/slave
+    links:
+      - jenkins:jenkins
 
   discord:
     container_name: Discord

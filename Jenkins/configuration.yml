@@ -1,6 +1,17 @@
 jenkins:
   systemMessage: "Hello ! Welcome on Marvin."
-  numExecutors: ${BUILD_AGENTS}
+  labelAtoms:
+  - name: "Slave"
+  nodes:
+  - permanent:
+      launcher:
+        command:
+          command: "ssh root@slave -i /var/key -o StrictHostKeyChecking=no /bin/slave"
+      name: "Slave"
+      numExecutors: ${NB_AGENTS}
+      remoteFS: "/var/workspace"
+      retentionStrategy: "always"
+  numExecutors: 0
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
