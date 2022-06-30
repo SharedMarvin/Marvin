@@ -94,8 +94,8 @@ module.exports = {
     }
     environment {
         REPORT = "{}"
-        COVERAGE_LINES = "code coverage is disabled for [${Module}] ${Project}"
-        COVERAGE_BRANCHES = "code coverage is disabled for [${Module}] ${Project}"
+        COVERAGE_LINES = "${manifest["enable-coverage"] ? '' : `code coverage is disabled for [${Module}] ${Project}`}"
+        COVERAGE_BRANCHES = "${manifest["enable-coverage"] ? '' : `code coverage is disabled for [${Module}] ${Project}`}"
     }
     stages {
         stage('Setup') {
@@ -133,7 +133,7 @@ module.exports = {
         }
     }
     post {
-        always {${manifest["enable-coverage"] || true ? `
+        always {${manifest["enable-coverage"] ? `
             echo "========== COVERAGE LOGS =========="
             sh 'make tests_run || exit 0'
             sh 'gcovr --exclude=tests/'
@@ -143,7 +143,7 @@ module.exports = {
             publishCoverage adapters: [cobertura('marvin@tmp/coverage_report.xml')]
             echo "==================================="`: ''}
             script {
-                REPORT = readFile(file: 'marvin@tmp/tests_report.json').trim()${manifest["enable-coverage"] || true ? `
+                REPORT = readFile(file: 'marvin@tmp/tests_report.json').trim()${manifest["enable-coverage"] ? `
                 COVERAGE_LINES = readFile(file: 'marvin@tmp/coverage_report_lines.txt').trim()
                 COVERAGE_BRANCHES = readFile(file: 'marvin@tmp/coverage_report_branches.txt').trim()
                 ` : ''}
