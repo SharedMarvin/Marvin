@@ -74,6 +74,7 @@ client.login(process.env.DISCORD_TOKEN)
 var express = require('express')
 var bodyParser = require('body-parser')
 var cons = require('consolidate')
+const minifyHTML = require('express-minify-html');
 var app = express()
 const webhookHandler = require('./webhook')
 const reportHandler = require('./report')
@@ -84,6 +85,18 @@ app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.use(bodyParser.json())
 app.set('json spaces', 4)
+app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
 
 // GitHub webhook handler
 app.post('/webhook/:Module/:Project/:Snowflake', async (req, res) => {
@@ -162,11 +175,11 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
                     test.message = test.message.replace(/\n/g, '<br />')
                 }
             })
-            skill.percentage = Math.round(skill.passed / skill.total * 100)
+            skill.percentage = Math.round((skill.passed / skill.total * 100) * 100) / 100
             skill.color = skill.percentage >= 70 ? 'success' : skill.percentage >= 35 ? 'warning' : 'danger'
         })
         const dt = new Date(parameters.COMMIT_TIME)
-        const totalPercentage = Math.round((totalPassed / totalTests) * 100)
+        const totalPercentage = Math.round(((totalPassed / totalTests) * 100) * 100) / 100
         let covLinesPassed = 0;
         let covLinesTotal = 0;
         let covBranchesPassed = 0;
@@ -174,11 +187,11 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
         if (report["enable-coverage"] && parameters.COVERAGE_LINES) {
             const regex = /TOTAL[' ']{0,}[0-9]{0,}[' ']{0,}[0-9]{0,}[' ']{0,}.*%/gm
             const coverageLinesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
-            const coverageBranchesData = parameters.COVERAGE_LINES.match(regex)[0].trim().split(/\s+/)
-            covLinesPassed = parseInt(coverageLinesData[1])
-            covLinesTotal = parseInt(coverageLinesData[2])
-            covBranchesPassed = parseInt(coverageBranchesData[1])
-            covBranchesTotal = parseInt(coverageBranchesData[2])
+            const coverageBranchesData = parameters.COVERAGE_BRANCHES.match(regex)[0].trim().split(/\s+/)
+            covLinesTotal = parseInt(coverageLinesData[1])
+            covLinesPassed = parseInt(coverageLinesData[2])
+            covBranchesTotal = parseInt(coverageBranchesData[1])
+            covBranchesPassed = parseInt(coverageBranchesData[2])
         }
         res.render('report', {
             Module: Module,
@@ -193,12 +206,12 @@ app.get('/report/:Module/:Project/:Snowflake/:BuildNb', async (req, res) => {
             CoverageLines: parameters.COVERAGE_LINES ? parameters.COVERAGE_LINES.replace(/\n/g, '<br />').trim() : null,
             CoverageLinesPassed: covLinesPassed,
             CoverageLinesTotal: covLinesTotal,
-            CoverageLinesPercentage: (covLinesPassed / covLinesTotal * 100) || 0,
+            CoverageLinesPercentage: Math.round(((covLinesPassed / covLinesTotal * 100) || 0) * 100) / 100,
             CoverageLinesColor: (covLinesPassed / covLinesTotal * 100) >= 70 ? 'success' : (covLinesPassed / covLinesTotal * 100) > 35 ? 'warning' : 'danger',
             CoverageBranches: parameters.COVERAGE_BRANCHES ? parameters.COVERAGE_BRANCHES.replace(/\n/g, '<br />').trim() : null,
             CoverageBranchesPassed: covBranchesPassed,
             CoverageBranchesTotal: covBranchesTotal,
-            CoverageBranchesPercentage: (covBranchesPassed / covBranchesTotal * 100) || 0,
+            CoverageBranchesPercentage: Math.round(((covBranchesPassed / covBranchesTotal * 100) || 0) * 100) / 100,
             CoverageBranchesColor: (covBranchesPassed / covBranchesTotal * 100) >= 70 ? 'success' : (covBranchesPassed / covBranchesTotal * 100) > 35 ? 'warning' : 'danger',
             ShowCoverage: report["enable-coverage"] && (covLinesPassed > 0 || covBranchesPassed) > 0 ? true : false,
         })
