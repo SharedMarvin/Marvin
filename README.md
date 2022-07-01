@@ -22,7 +22,6 @@ Here's an example of a manifest.json :<br />
 {
     "module": "B-PSU-210",
     "project": "42sh",
-    "agent-image": "epitechcontent/epitest-docker:latest",
     "build-commands": [
         "make",
         "make clean"
@@ -46,7 +45,6 @@ Here's an example of a manifest.json :<br />
     ]
 }
 ```
-The `agent-image` property is the Docker image used to run the tests, we recommand you to use the epitest image.<br />
 All the content of the tests repository will be available in the job, so you can create a .sh (like in the example) to run tests.<br />
 In the example, the `tester.sh` MUST print only `^OK`, otherwise the tests will be marked as failed, and the output will be used as trace for the student.
 ## Host your own Marvin

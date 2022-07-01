@@ -7,9 +7,6 @@
         "project": {
             "type": "string"
         },
-        "agent-image": {
-            "type": "string"
-        },
         "enable-coding-style": {
             "type": "boolean"
         },
@@ -63,7 +60,6 @@
     "required": [
         "module",
         "project",
-        "agent-image",
         "enable-coding-style",
         "enable-coverage",
         "build-commands",
