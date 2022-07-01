@@ -108,7 +108,7 @@ module.exports = {
                     cp /var/marvin/* marvin@tmp/
                     cd marvin@tmp/ && npm ci --production && cd -
                     git clone ${payload.repository.clone_url} cloning-area && mv cloning-area/* . && rm -rf cloning-area${manifest["enable-coding-style"] ? `
-                    git clone https://github.com/CustomEntity/crNormz.git cloning-area && cd cloning-area && sudo ./crnormz_installer.sh && cd - && rm -rf cloning-area && crnormz --raw-output` : ''}
+                    crnormz --raw-output` : ''}
                     git clone https://github.com/${process.env["GITHUB_ORGANIZATION"]}/${Module}-${Project}.git cloning-area && mv cloning-area/* marvin@tmp/ && rm -rf cloning-area
                     set -x
                 '''
